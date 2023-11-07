@@ -18,7 +18,8 @@ class ControllerAdvice {
         logger.info("catch NotFoundException")
         return ErrorDto(
             ex.message,
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND
         )
     }
 }

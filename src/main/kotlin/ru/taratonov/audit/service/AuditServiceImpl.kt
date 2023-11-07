@@ -23,7 +23,7 @@ class AuditServiceImpl(
         return auditRepository.findById(uuid)
             .orElseThrow {
                 logger.error("audit action with uuid {} not found!", uuid)
-                NotFoundException("audit action with uuid $uuid not found!")
+                throw NotFoundException("audit action with uuid $uuid not found!")
             }
     }
 

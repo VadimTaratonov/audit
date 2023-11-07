@@ -90,5 +90,10 @@ interface AuditApi {
         description = "Actions received!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = AuditAction::class))]
     )
+    @ApiResponse(
+        responseCode = "404",
+        description = "Actions not found!",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
+    )
     fun getAll(): List<AuditAction>
 }
