@@ -1,5 +1,6 @@
 package ru.taratonov.audit.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
@@ -10,13 +11,12 @@ import ru.taratonov.audit.model.AuditAction
 
 
 @Configuration
-class RedisConfig {
+class RedisConfig(@Value("\${spring.data.redis.host}") val name: String) {
 
     @Bean
     fun jedisConnectionFactory(): JedisConnectionFactory {
         val configuration = RedisStandaloneConfiguration()
-        configuration.hostName = "127.0.0.1"
-        configuration.port = 6379
+        configuration.hostName = name
         return JedisConnectionFactory(configuration)
     }
 
