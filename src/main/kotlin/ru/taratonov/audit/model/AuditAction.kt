@@ -15,26 +15,26 @@ data class AuditAction(
         name = "uuid",
         example = "f7d02206-6b87-4dc0-82d6-aab815c9101e"
     )
-    val uuid: UUID,
+    val uuid: UUID? = null,
 
     @field:Schema(
         description = "type of audit action",
         name = "type",
         example = "START"
     )
-    val type: Type,
+    val type: Type? = null,
 
     @field:Schema(
         description = "service type of audit action",
         name = "serviceType",
         example = "DEAL"
     )
-    val serviceType: ServiceType,
+    val serviceType: ServiceType? = null,
 
     @field:Schema(
         description = "message of audit action",
         name = "message",
         example = "Method sendDocuments with parameters 3"
     )
-    val message: String
+    val message: String? = null
 )

@@ -18,6 +18,8 @@
 		<kotlin.version>1.8.22</kotlin.version>
 		<kafka.version>3.0.0</kafka.version>
 		<kotlin.logging.jvm>3.0.5</kotlin.logging.jvm>
+		<jedis.version>4.4.6</jedis.version>
+		<springdoc.version>2.1.0</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,19 +57,19 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>3.1.5</version>
+			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>4.4.6</version>
+			<version>${jedis.version}</version>
 		</dependency>
 
 		<!-- Swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version>
+			<version>${springdoc.version}</version>
 		</dependency>
 
 		<!-- Kafka -->
