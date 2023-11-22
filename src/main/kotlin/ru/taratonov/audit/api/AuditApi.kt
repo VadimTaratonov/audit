@@ -29,7 +29,7 @@ interface AuditApi {
         description = "Action saved!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = AuditAction::class))]
     )
-    fun save(
+    suspend fun save(
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Entity to saving",
             content = [Content(schema = Schema(implementation = AuditAction::class))]
@@ -50,7 +50,7 @@ interface AuditApi {
         description = "Action not found!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
     )
-    fun getByUuid(@PathVariable("uuid") uuid: UUID): AuditAction
+    suspend fun getByUuid(@PathVariable("uuid") uuid: UUID): AuditAction
 
     @GetMapping("/type/{type}")
     @Operation(summary = "Get actions by type", description = "Allows to get actions by type from redis db")
@@ -64,7 +64,7 @@ interface AuditApi {
         description = "Actions not found!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
     )
-    fun getAllByType(@PathVariable("type") type: Type): List<AuditAction>
+    suspend fun getAllByType(@PathVariable("type") type: Type): List<AuditAction>
 
     @GetMapping("/service/{serviceType}")
     @Operation(
@@ -81,7 +81,7 @@ interface AuditApi {
         description = "Actions not found!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
     )
-    fun getAllByService(@PathVariable("serviceType") serviceType: ServiceType): List<AuditAction>
+    suspend fun getAllByService(@PathVariable("serviceType") serviceType: ServiceType): List<AuditAction>
 
     @GetMapping("/all")
     @Operation(summary = "Get actions", description = "Allows to get all actions from redis db")
@@ -95,5 +95,19 @@ interface AuditApi {
         description = "Actions not found!",
         content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
     )
-    fun getAll(): List<AuditAction>
+    suspend fun getAll(): List<AuditAction>
+
+    @GetMapping("/all/keys")
+    @Operation(summary = "Get keys", description = "Allows to get all actions keys from redis db")
+    @ApiResponse(
+        responseCode = "200",
+        description = "Keys received!",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = String::class))]
+    )
+    @ApiResponse(
+        responseCode = "404",
+        description = "Keys not found!",
+        content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDto::class))]
+    )
+    suspend fun getAllKeys(): List<String>
 }

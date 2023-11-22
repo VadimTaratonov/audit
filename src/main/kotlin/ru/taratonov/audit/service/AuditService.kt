@@ -6,9 +6,10 @@ import ru.taratonov.audit.model.AuditAction
 import java.util.UUID
 
 interface AuditService {
-    fun save(auditAction: AuditAction)
-    fun getByUuid(uuid: UUID): AuditAction
-    fun getAllByType(type: Type): List<AuditAction>
-    fun getAllByService(serviceType: ServiceType) : List<AuditAction>
-    fun getAll(): List<AuditAction>
+    suspend fun save(auditAction: AuditAction)
+    suspend fun getByUuid(uuid: UUID): AuditAction
+    suspend fun getAllByType(type: Type): List<AuditAction>
+    suspend fun getAllByService(serviceType: ServiceType) : List<AuditAction>
+    suspend fun getAll(): List<AuditAction>
+    suspend fun getAllKeys(): List<String>
 }

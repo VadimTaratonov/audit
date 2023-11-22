@@ -13,24 +13,28 @@ import java.util.*
 class AuditController(
     private val auditService: AuditService
 ) : AuditApi {
-    override fun save(auditAction: AuditAction): ResponseEntity<Void> {
+    override suspend fun save(auditAction: AuditAction): ResponseEntity<Void> {
         auditService.save(auditAction)
         return ResponseEntity(HttpStatus.OK)
     }
 
-    override fun getByUuid(uuid: UUID): AuditAction {
+    override suspend fun getByUuid(uuid: UUID): AuditAction {
         return auditService.getByUuid(uuid)
     }
 
-    override fun getAllByType(type: Type): List<AuditAction> {
+    override suspend fun getAllByType(type: Type): List<AuditAction> {
         return auditService.getAllByType(type)
     }
 
-    override fun getAllByService(serviceType: ServiceType): List<AuditAction> {
+    override suspend fun getAllByService(serviceType: ServiceType): List<AuditAction> {
         return auditService.getAllByService(serviceType)
     }
 
-    override fun getAll(): List<AuditAction> {
+    override suspend fun getAll(): List<AuditAction> {
         return auditService.getAll()
+    }
+
+    override suspend fun getAllKeys(): List<String> {
+        return auditService.getAllKeys()
     }
 }

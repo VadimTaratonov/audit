@@ -1,31 +1,25 @@
 package ru.taratonov.audit.config
 
+import io.lettuce.core.ExperimentalLettuceCoroutinesApi
+import io.lettuce.core.RedisClient
+import io.lettuce.core.api.coroutines
+import io.lettuce.core.api.coroutines.RedisCoroutinesCommands
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
-import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
-import ru.taratonov.audit.model.AuditAction
 
 
 @Configuration
-class RedisConfig(@Value("\${spring.data.redis.host}") val name: String) {
-
+class RedisConfig(
+    @Value("\${spring.data.redis.host}")
+    private val host: String,
+    @Value("\${spring.data.redis.port}")
+    private val port: String
+) {
     @Bean
-    fun jedisConnectionFactory(): JedisConnectionFactory {
-        val configuration = RedisStandaloneConfiguration()
-        configuration.hostName = name
-        return JedisConnectionFactory(configuration)
-    }
-
-    @Bean
-    fun redisTemplate(): RedisTemplate<String, AuditAction> {
-        val redisTemplate = RedisTemplate<String, AuditAction>()
-        redisTemplate.connectionFactory = jedisConnectionFactory()
-        redisTemplate.valueSerializer = Jackson2JsonRedisSerializer(AuditAction::class.java)
-
-        return redisTemplate
+    @OptIn(ExperimentalLettuceCoroutinesApi::class)
+    fun reactiveLettuceRedisConnection(): RedisCoroutinesCommands<String, String> {
+        val redisClient: RedisClient = RedisClient.create("redis://$host:$port")
+        return redisClient.connect().coroutines()
     }
 }
